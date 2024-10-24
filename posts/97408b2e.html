@@ -1,0 +1,675 @@
+<!DOCTYPE html><html class="hide-aside" lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no"><title>Java面试 | 无限进步</title><meta name="keywords" content="java"><meta name="author" content="江小白"><meta name="copyright" content="江小白"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#f7f9fe"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-touch-fullscreen" content="yes"><meta name="apple-mobile-web-app-title" content="Java面试"><meta name="application-name" content="Java面试"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="#f7f9fe"><meta property="og:type" content="article"><meta property="og:title" content="Java面试"><meta property="og:url" content="http://example.com/posts/97408b2e.html"><meta property="og:site_name" content="无限进步"><meta property="og:description" content="一、Redis  1.1 redis使用场景 1.1.1 缓存 面试官: 我看你做的项目中，使用了redis，你在最近的项目中哪些场景使用了redis呢？  一是验证你使用场景的真实性，二是为了作为深入发问的切入点 缓存 分布式锁 消息队列、延迟队列  缓存 缓存穿透缓存击穿缓存雪崩 什么是缓存穿透"><meta property="og:locale" content="zh-CN"><meta property="og:image" content="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242141269.jpeg"><meta property="article:author" content="江小白"><meta property="article:tag"><meta name="twitter:card" content="summary"><meta name="twitter:image" content="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242141269.jpeg"><meta name="description" content="一、Redis  1.1 redis使用场景 1.1.1 缓存 面试官: 我看你做的项目中，使用了redis，你在最近的项目中哪些场景使用了redis呢？  一是验证你使用场景的真实性，二是为了作为深入发问的切入点 缓存 分布式锁 消息队列、延迟队列  缓存 缓存穿透缓存击穿缓存雪崩 什么是缓存穿透"><link rel="shortcut icon" href="/favicon.ico"><link rel="canonical" href="http://example.com/posts/97408b2e"><link rel="preconnect" href="//cdn.cbd.int"/><meta name="google-site-verification" content="xxx"/><meta name="baidu-site-verification" content="code-xxx"/><meta name="msvalidate.01" content="xxx"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/swiper/swiper.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  linkPageTop: undefined,
+  peoplecanvas: undefined,
+  postHeadAiDescription: undefined,
+  diytitle: {"enable":true,"leaveTitle":"w(ﾟДﾟ)w 不要走！再看看嘛！","backTitle":"♪(^∇^*)欢迎肥来！"},
+  LA51: undefined,
+  greetingBox: {"enable":true,"default":"晚上好👋","list":[{"greeting":"晚安😴","startTime":0,"endTime":5},{"greeting":"早上好鸭👋, 祝你一天好心情！","startTime":6,"endTime":9},{"greeting":"上午好👋, 状态很好，鼓励一下～","startTime":10,"endTime":10},{"greeting":"11点多啦, 在坚持一下就吃饭啦～","startTime":11,"endTime":11},{"greeting":"午安👋, 宝贝","startTime":12,"endTime":14},{"greeting":"🌈充实的一天辛苦啦！","startTime":14,"endTime":18},{"greeting":"19点喽, 奖励一顿丰盛的大餐吧🍔。","startTime":19,"endTime":19},{"greeting":"晚上好👋, 在属于自己的时间好好放松😌~","startTime":20,"endTime":24}]},
+  twikooEnvId: '',
+  commentBarrageConfig:undefined,
+  root: '/',
+  preloader: {"source":3},
+  friends_vue_info: undefined,
+  navMusic: true,
+  mainTone: undefined,
+  authorStatus: undefined,
+  algolia: undefined,
+  localSearch: undefined,
+  translate: {"defaultEncoding":2,"translateDelay":0,"msgToTraditionalChinese":"繁","msgToSimplifiedChinese":"简","rightMenuMsgToTraditionalChinese":"转为繁体","rightMenuMsgToSimplifiedChinese":"转为简体"},
+  noticeOutdate: {"limitDay":365,"position":"top","messagePrev":"该文章创建于","messageNext":"天前，请以最新文章为准"},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":330},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    simplehomepage: true,
+    post: false
+  },
+  runtime: '天',
+  date_suffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: {"chs_to_cht":"你已切换为繁体","cht_to_chs":"你已切换为简体","day_to_night":"你已切换为深色模式","night_to_day":"你已切换为浅色模式","bgLight":"#425AEF","bgDark":"#1f1f1f","position":"top-center"},
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.min.js',
+      css: 'https://cdn.cbd.int/flickr-justified-gallery@2.1.2/dist/fjGallery.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: true,
+  isAnchor: false,
+  shortcutKey: undefined,
+  autoDarkmode: true
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  configTitle: '无限进步',
+  title: 'Java面试',
+  postAI: '',
+  pageFillDescription: '一、Redis, 1.1 redis使用场景, 1.1.1 缓存, 1.1.2 双写一致性, 1.1.3 持久化, 1.1.4 数据过期策略, 1.1.5 数据淘汰策略一使用场景缓存面试官我看你做的项目中使用了你在最近的项目中哪些场景使用了呢一是验证你使用场景的真实性二是为了作为深入发问的切入点缓存分布式锁消息队列延迟队列缓存缓存穿透缓存击穿缓存雪崩什么是缓存穿透缓存穿透是指查询的数据在缓存和数据库中都不存在导致每次查询都直接访问数据库当有大量此类请求时会对数据库造成巨大压力甚至引发系统崩溃影响数据库负载过高无效请求直接打到数据库增加数据库压力服务响应变慢数据库压力增加导致整体服务响应速度下降潜在安全风险大量无效请求可能被利用进行恶意攻击解决方案一缓存空数据查询返回的数据为空仍把这个空结果进行缓存优点简单缺点消耗内存可能会发生不一致的问题解决方案二利用布隆过滤器快速判断请求的数据是否存在过滤掉大量无效请求布隆过滤器优点内存占用较少没有多余的缺点实现复杂存在误判什么是缓存击穿缓存击穿指的是某一热点数据在缓存中失效导致大量请求同时访问数据库获取该数据与缓存雪崩不同缓存击穿是单个热点数据的失效引发的问题影响热点数据压力集中大量请求集中访问某一热点数据瞬间增加数据库负载服务不稳定数据库压力骤增可能导致服务响应变慢甚至宕机解决方案一互斥锁分布式锁强一致性性能差解决方案二逻辑过期不设置过期时间高可用性能优不能保证数据绝对一致什么是缓存雪崩缓存雪崩是指在短时间内大量的缓存项同时失效导致大量请求直接涌向数据库可能引发数据库的过载甚至崩溃这种现象通常发生在缓存设置了相同的过期时间使得缓存项在同一时间大量过期影响数据库压力骤增短时间内大量请求直接访问数据库可能导致数据库性能下降甚至宕机服务不可用缓存雪崩可能导致整个系统的服务不可用影响用户体验数据不一致在缓存恢复过程中可能出现数据不一致的情况解决方案给不同的的过期时间添加随机值利用集群提高服务的可用性哨兵模式集群模式给缓存业务添加降级限流策略给业务添加多级缓存双写一致性面试官作为缓存的数据如何与进行同步呢双写一致性先介绍自己的业务背景一致性要求高允许延迟一致双写一致当修改了数据库的数据也要同时更新缓存的数据缓存和数据库的数据要保持一致读操作缓存命中直接返回缓存未命中写入缓存设定超时时间写操作延迟双删分析先删除缓存还是先新建数据库先删除缓存再操作数据库先操作数据库再删除缓存为什么要删除两次缓存因为从上面的场景导入我们发现无论是先删除缓存还是先修改数据库都会有数据不一致即脏数据的风险再次把先删除缓存再修改数据库的异常流程图拿过来我们发现整个流程走完后线程更新数据库拿到的是正确的值而线程拿到的是错误的值这时只要我们以数据库为主删除缓存再写入数据库的值那么就能拿到正确的值为什么要延时双删此外延时一会是因为一般数据库都是主从分离读写分离的延时是为了让主库有时间通知到从库所有数据库的更新操作全部走完延时双删极大程度上避免了脏数据的风险但因为有延时的存在延时时间不好控制所以也不能说百分百避免分布式锁互斥锁直接加互斥锁能保障数据的强一致性但是性能较低此时我们就需要优化一下互斥锁因为存入缓存的数据一般都是读多写少共享锁读锁加锁之后其他线程可以共享读操作排它锁独占锁加锁之后阻塞其他线程读写操作读操作华为手机华为手机写操作华为手机华为手机异步通知异步通知保证数据的最终一致性基于的异步通知的方案对于业务代码几乎是零侵入的持久化面试官做为缓存数据的持久化是怎么做的在中提供了两种数据持久化的方式机制提供了持久化能力这个功能可以将在内存中的数据库状态保持在磁盘里面避免数据意外丢失持久化机制可以手动执行也可以根据服务器配置选定定期执行操作该功能可以将某一个时间点的数据快照进行保存到一个文件中优势一旦采用该方式那么你的整个数据库将只包含一个文件这对于文件备份而言是非常完美的比如你可能打算每个小时归档一次最近小时的数据同时还要每天归档一次最近天的数据通过这样的备份策略一旦系统出现灾难性故障我们可以非常容易的进行恢复对于灾难恢复而言是非常不错的选择因为我们可以非常轻松的将一个单独的文件压缩后再转移到其它存储介质上性能最大化对于的服务进程而言在开始持久化时它唯一需要做的只是出子进程之后再由子进程完成这些持久化的工作这样就可以极大的避免服务进程执行操作了相比于机制如果数据集很大的启动效率会更高劣势如果你想保证数据的高可用性即最大限度的避免数据丢失那么将不是一个很好的选择因为系统一旦在定时持久化之前出现宕机现象此前没有来得及写入磁盘的数据都将丢失由于是通过子进程来协助完成数据持久化工作的因此如果当数据集较大时可能会导致整个服务器停止服务几百毫秒甚至是秒钟指定时间间隔执行指定次数更新操作满足条件就将内存中的数据同步到硬盘中官方出厂配置默认是秒内有个更改秒内有个更改以及秒内有个更改则将内存中的数据快照写入磁盘在秒分钟之后如果至少有一个发生变化则内存快照在秒分钟之后如果至少有个发生变化则内存快照在秒分钟之后如果至少有个发生变化则内存快照快照的过程如下使用函数复制一份当前进程父进程的副本子进程父进程继续接收并处理客户端发来的命令而子进程开始将内存中的数据写入硬盘中的临时文件当子进程写入完所有数据后会用该临时文件替换旧的文件至此一次快照操作完成注意会存在写一部命令压缩缓存区记录写入文件时候的操作在执行的时候操作系统会使用写时复制策略即函数发生的一刻父子进程共享同一内存数据当父进程要更改其中某片数据时如执行一个写命令操作系统会将该片数据复制一份以保证子进程的数据不受影响所以新的文件存储的是执行时那一刻的内存快照数据通过上述过程可以发现在进行快照的过程中不会修改文件只有快照结束后才会将旧的文件替换成新的也就是说任何时候文件都是完整的这使得可以通过定时备份文件来实现数据库备份全称追加文件处理的每一条命令都会记录在文件可以看做是命令日志文件默认是关闭的需要修改配置文件来开启是否开启功能默认是文件的名称的命令记录的频率也可以通过文件来配置表示每执行一次写命令立即记录到文件写命令执行完先放入缓冲区然后每隔秒将缓冲区数据写到文件是默认方案写命令执行完先放入缓冲区由操作系统决定何时将缓冲区内容写到磁盘因为是记录命令文件会比文件大的多而且会记录对同一个的多次写操作但只有最后一次写操作才有意义通过执行命令可以让文件执行重写功能用最少的命令达到相同效果也会在触发阈值时自动去重写文件阈值也可以在中配置文件比上次文件增长超过多少百分比则触发重写文件体积最小多大以上才触发重写数据过期策略面试官假如的过期之后会立即删除吗对数据设置数据的有效时间数据过期以后就需要将数据从内存中删除掉可以按照不同的规则进行删除这种删除规则就被称之为数据的删除策略数据过期策略惰性删除惰性删除设置该过期时间后我们不去管它当需要该时我们在检查其是否过期如果过期我们就删掉它反之返回该优点对友好只会在使用该时才会进行过期检查对于很多用不到的不用浪费时间进行过期检查缺点对内存不友好如果一个已经过期但是一直没有使用那么该就会一直存在内存中内存永远不会释放定期删除定期删除每隔一段时间我们就对一些进行检查删除里面过期的从一定数量的数据库中取出一定数量的随机进行检查并删除其中的过期定期清理有两种模式模式是定时任务执行频率默认为每次不超过以通过修改配置文件的选项来调整这个次数模式执行频率不固定但两次间隔不低于每次耗时不超过优点可以通过限制删除操作执行的时长和频率来减少删除操作对的影响另外定期删除也能有效释放过期键占用的内存缺点难以确定删除操作执行的时长和频率数据淘汰策略面试官假如缓存过多内存是有限的内存被占满了怎么办数据的淘汰策略当中的内存不够用时此时在向中添加新的那么就会按照某一种规则将内存中的数据删除掉这种数据的删除规则被称之为内存的淘汰策略使用建议优先使用策略充分利用算法的优势把最近最常访问的数据留在缓存中如果业务有明显的冷热数据区分建议使用如果业务中数据访问频率差别不大没有明显冷热数据区分建议使用随机选择淘汰如果业务中有置顶的需求可以使用策略同时置顶数据不设置过期时间这些数据就一直不被删除会淘汰其他设置过期时间的数据如果业务中有短时高频访问的数据可以使用或策略其他面试题数据库有万数据只能缓存数据如何保证中的数据都是热点数据使用挑选最近最少使用的数据淘汰淘汰策略留下来的都是经常访问的热点数据的内存用完了会发生什么主要看数据淘汰策略是什么如果是默认的配置会直接报错',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-10-25 00:02:58',
+  postMainColor: '',
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#18171d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#f7f9fe')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          const isDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches
+          const isLightMode = window.matchMedia('(prefers-color-scheme: light)').matches
+          const isNotSpecified = window.matchMedia('(prefers-color-scheme: no-preference)').matches
+          const hasNoSupport = !isDarkMode && !isLightMode && !isNotSpecified
+
+          if (t === undefined) {
+            if (isLightMode) activateLightMode()
+            else if (isDarkMode) activateDarkMode()
+            else if (isNotSpecified || hasNoSupport) {
+              const now = new Date()
+              const hour = now.getHours()
+              const isNight = hour <= 6 || hour >= 18
+              isNight ? activateDarkMode() : activateLightMode()
+            }
+            window.matchMedia('(prefers-color-scheme: dark)').addListener(e => {
+              if (saveToLocal.get('theme') === undefined) {
+                e.matches ? activateDarkMode() : activateLightMode()
+              }
+            })
+          } else if (t === 'light') activateLightMode()
+          else activateDarkMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/font-awesome-animation.min.css" media="defer" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/tag_plugins.css" media="defer" onload="this.media='all'"><script src="https://cdn.cbd.int/hexo-butterfly-tag-plugins-plus@latest/lib/assets/carousel-touch.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.3.0"></head><body data-type="anzhiyu"><div id="web_bg"></div><div id="an_music_bg"></div><div id="loading-box" onclick="document.getElementById(&quot;loading-box&quot;).classList.add(&quot;loaded&quot;)"><div class="loading-bg"><img class="loading-img nolazyload" alt="加载头像" src="/./images/tx.jpg"/><div class="loading-image-dot"></div></div></div><script>const preloader = {
+  endLoading: () => {
+    document.getElementById('loading-box').classList.add("loaded");
+  },
+  initLoading: () => {
+    document.getElementById('loading-box').classList.remove("loaded")
+  }
+}
+window.addEventListener('load',()=> { preloader.endLoading() })
+setTimeout(function(){preloader.endLoading();},10000)
+
+if (true) {
+  document.addEventListener('pjax:send', () => { preloader.initLoading() })
+  document.addEventListener('pjax:complete', () => { preloader.endLoading() })
+}</script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.10/progress_bar/progress_bar.css"/><script async="async" src="https://cdn.cbd.int/pace-js@1.2.4/pace.min.js" data-pace-options="{ &quot;restartOnRequestAfter&quot;:false,&quot;eventLag&quot;:false}"></script><div class="post" id="body-wrap"><header class="post-bg" id="page-header"><nav id="nav"><div id="nav-group"><span id="blog_name"><div class="back-home-button"><i class="anzhiyufont anzhiyu-icon-grip-vertical"></i><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div></div><a id="site-name" href="/" accesskey="h"><div class="title">无限进步</div><i class="anzhiyufont anzhiyu-icon-house-chimney"></i></a></span><div class="mask-name-container"><div id="name-container"><a id="page-name" href="javascript:anzhiyu.scrollToDest(0, 500)">PAGE_NAME</a></div></div><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/nav/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/nav/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/nav/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/nav/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div></div><div id="nav-right"><div class="nav-button" id="randomPost_button"><a class="site-page" onclick="toRandomPost()" title="随机前往一个文章" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-dice"></i></a></div><input id="center-console" type="checkbox"/><label class="widget" for="center-console" title="中控台" onclick="anzhiyu.switchConsole();"><i class="left"></i><i class="widget center"></i><i class="widget right"></i></label><div id="console"><div class="console-card-group-reward"><ul class="reward-all console-card"><li class="reward-item"><a href="/null" target="_blank"><img class="post-qr-code-img" alt="微信" src="/null"/></a><div class="post-qr-code-desc">微信</div></li><li class="reward-item"><a href="/null" target="_blank"><img class="post-qr-code-img" alt="支付宝" src="/null"/></a><div class="post-qr-code-desc">支付宝</div></li></ul></div><div class="console-card-group"><div class="console-card-group-left"><div class="console-card" id="card-newest-comments"><div class="card-content"><div class="author-content-item-tips">互动</div><span class="author-content-item-title"> 最新评论</span></div><div class="aside-list"><span>正在加载中...</span></div></div></div><div class="console-card-group-right"><div class="console-card tags"><div class="card-content"><div class="author-content-item-tips">音乐</div><span class="author-content-item-title">灵魂的碰撞💥</span></div></div><div class="console-card history"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-box-archiv"></i><span>文章</span></div><div class="card-archives"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/10/"><span class="card-archive-list-date">十月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">4</span><span>篇</span></div></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/09/"><span class="card-archive-list-date">九月 2024</span><div class="card-archive-list-count-group"><span class="card-archive-list-count">2</span><span>篇</span></div></a></li></ul></div><hr/></div></div></div><div class="button-group"><div class="console-btn-item"><a class="darkmode_switchbutton" title="显示模式切换" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-moon"></i></a></div><div class="console-btn-item" id="consoleHideAside" onclick="anzhiyu.hideAsideBtn()" title="边栏显示控制"><a class="asideSwitch"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></a></div><div class="console-btn-item" id="consoleMusic" onclick="anzhiyu.musicToggle()" title="音乐开关"><a class="music-switch"><i class="anzhiyufont anzhiyu-icon-music"></i></a></div></div><div class="console-mask" onclick="anzhiyu.hideConsole()" href="javascript:void(0);"></div></div><div class="nav-button" id="nav-totop"><a class="totopbtn" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i><span id="percent" onclick="anzhiyu.scrollToDest(0,500)">0</span></a></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);" title="切换"><i class="anzhiyufont anzhiyu-icon-bars"></i></a></div></div></div></nav><div id="post-info"><div id="post-firstinfo"><div class="meta-firstline"><a class="post-meta-original">原创</a><span class="post-meta-categories"><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-inbox post-meta-icon"></i><a class="post-meta-categories" href="/categories/java/" itemprop="url">java</a></span><span class="article-meta tags"><a class="article-meta__tags" href="/tags/java/" tabindex="-1" itemprop="url"> <span> <i class="anzhiyufont anzhiyu-icon-hashtag"></i>java</span></a></span></div></div><h1 class="post-title" itemprop="name headline">Java面试</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="anzhiyufont anzhiyu-icon-calendar-days post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" itemprop="dateCreated datePublished" datetime="2024-10-24T13:38:36.000Z" title="发表于 2024-10-24 21:38:36">2024-10-24</time><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-history post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" itemprop="dateCreated datePublished" datetime="2024-10-24T16:02:58.855Z" title="更新于 2024-10-25 00:02:58">2024-10-25</time></span></div><div class="meta-secondline"><span class="post-meta-separator"></span><span class="post-meta-wordcount"><i class="anzhiyufont anzhiyu-icon-file-word post-meta-icon" title="文章字数"></i><span class="post-meta-label" title="文章字数">字数总计:</span><span class="word-count" title="文章字数">3.8k</span><span class="post-meta-separator"></span><i class="anzhiyufont anzhiyu-icon-clock post-meta-icon" title="阅读时长"></i><span class="post-meta-label" title="阅读时长">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">       </span><span class="post-meta-position" title="作者IP属地为衡阳"><i class="anzhiyufont anzhiyu-icon-location-dot"></i>衡阳</span></div></div></div><section class="main-hero-waves-area waves-area"><svg class="waves-svg" xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink" viewBox="0 24 150 28" preserveAspectRatio="none" shape-rendering="auto"><defs><path id="gentle-wave" d="M -160 44 c 30 0 58 -18 88 -18 s 58 18 88 18 s 58 -18 88 -18 s 58 18 88 18 v 44 h -352 Z"></path></defs><g class="parallax"><use href="#gentle-wave" x="48" y="0"></use><use href="#gentle-wave" x="48" y="3"></use><use href="#gentle-wave" x="48" y="5"></use><use href="#gentle-wave" x="48" y="7"></use></g></svg></section><div id="post-top-cover"><img class="nolazyload" id="post-top-bg" src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242141269.jpeg"></div></header><main id="blog-container"><div class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container" itemscope itemtype="http://example.com/posts/97408b2e.html"><header><a class="post-meta-categories" href="/categories/java/" itemprop="url">java</a><a href="/tags/java/" tabindex="-1" itemprop="url">java</a><h1 id="CrawlerTitle" itemprop="name headline">Java面试</h1><span itemprop="author" itemscope itemtype="http://schema.org/Person">江小白</span><time itemprop="dateCreated datePublished" datetime="2024-10-24T13:38:36.000Z" title="发表于 2024-10-24 21:38:36">2024-10-24</time><time itemprop="dateCreated datePublished" datetime="2024-10-24T16:02:58.855Z" title="更新于 2024-10-25 00:02:58">2024-10-25</time></header><h1>一、Redis</h1>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242144184.png" alt="image-20241024214450120" style="zoom: 50%;" />
+<h2 id="1-1-redis使用场景">1.1 redis使用场景</h2>
+<h3 id="1-1-1-缓存">1.1.1 缓存</h3>
+<p><strong>面试官:</strong> 我看你做的项目中，使用了redis，你在最近的项目中哪些场景使用了redis呢？</p>
+<ul>
+<li>一是验证你使用场景的真实性，二是为了作为深入发问的切入点</li>
+<li>缓存</li>
+<li>分布式锁</li>
+<li>消息队列、延迟队列</li>
+</ul>
+<p><strong>缓存</strong></p>
+<div class="tabs" id=""><ul class="nav-tabs"><button type="button" class="tab  active" data-href="-1">缓存穿透</button><button type="button" class="tab " data-href="-2">缓存击穿</button><button type="button" class="tab " data-href="-3">缓存雪崩</button></ul><div class="tab-contents"><div class="tab-item-content active" id="-1"><details class="folding-tag" ><summary> 什么是缓存穿透 </summary>
+              <div class='content'>
+              <p><strong>缓存穿透</strong>是指查询的数据<strong>在缓存和数据库中都不存在</strong>，导致每次查询都<strong>直接访问数据库</strong>。当有<strong>大量此类请求</strong>时，会对数据库造成<strong>巨大压力</strong>，甚至引发<strong>系统崩溃</strong></p><p><strong>影响:</strong></p><ul><li><strong>数据库负载过高</strong>：无效请求直接打到数据库，增加数据库压力。</li><li><strong>服务响应变慢</strong>：数据库压力增加，导致整体服务响应速度下降。</li><li><strong>潜在安全风险</strong>：大量无效请求可能被利用进行<strong>恶意攻击</strong>。</li></ul>
+              </div>
+            </details>
+<p><strong>解决方案一：</strong> 缓存空数据，查询返回的数据为空，仍把这个空结果进行缓存</p>
+<ul>
+<li>优点：简单</li>
+<li>缺点：消耗内存，可能会发生不一致的问题</li>
+</ul>
+<p><strong>解决方案二：</strong> 利用<strong>布隆过滤器</strong>快速判断请求的数据是否存在，过滤掉大量无效请求。<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242206807.png" alt="image-20241024220632768"></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41125219/article/details/119982158">布隆(Bloom Filter)过滤器</a></p>
+<ul>
+<li>优点：内存占用较少，没有多余的key</li>
+<li>缺点：实现复杂，存在误判</li>
+</ul></div><div class="tab-item-content" id="-2"><details class="folding-tag" ><summary> 什么是缓存击穿 </summary>
+              <div class='content'>
+              <p><strong>缓存击穿</strong>指的是某一<strong>热点数据</strong>在缓存中<strong>失效</strong>，导致大量请求<strong>同时访问数据库</strong>获取该数据。与缓存雪崩不同，缓存击穿是<strong>单个热点数据</strong>的失效引发的问题。</p><p><strong>影响</strong></p><ul><li><strong>热点数据压力集中</strong>：大量请求集中访问某一热点数据，瞬间增加数据库负载。</li><li><strong>服务不稳定</strong>：数据库压力骤增可能导致服务响应变慢甚至宕机。</li></ul>
+              </div>
+            </details>
+<p><strong>解决方案一：</strong> 互斥锁（分布式锁）</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242222933.png" alt="image-20241024222218898"></p>
+<ul>
+<li>强一致性</li>
+<li>性能差</li>
+</ul>
+<p><strong>解决方案二：</strong> 逻辑过期（不设置过期时间）</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242225830.png" alt="image-20241024222555790"></p>
+<ul>
+<li>高可用</li>
+<li>性能优</li>
+<li>不能保证数据绝对一致</li>
+</ul></div><div class="tab-item-content" id="-3"><details class="folding-tag" ><summary> 什么是缓存雪崩 </summary>
+              <div class='content'>
+              <p><strong>缓存雪崩</strong>是指在<strong>短时间内</strong>，大量的缓存项<strong>同时失效</strong>，导致<strong>大量请求直接涌向数据库</strong>，可能引发数据库的<strong>过载甚至崩溃</strong>。这种现象通常发生在缓存设置了<strong>相同的过期时间</strong>，使得缓存项在同一时间大量过期。</p><p><strong>影响</strong></p><ul><li><strong>数据库压力骤增</strong>：短时间内大量请求直接访问数据库，可能导致数据库性能下降甚至宕机。</li><li><strong>服务不可用</strong>：缓存雪崩可能导致整个系统的服务不可用，影响用户体验。</li><li><strong>数据不一致</strong>：在缓存恢复过程中，可能出现数据不一致的情况。</li></ul>
+              </div>
+            </details>
+<p>解决方案：</p>
+<ul>
+<li>给不同的key的TTL（过期时间）添加随机值</li>
+<li>利用Redis集群提高服务的可用性（哨兵模式，集群模式）</li>
+<li>给缓存业务添加降级限流策略</li>
+<li>给业务添加多级缓存</li>
+</ul></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div>
+<h3 id="1-1-2-双写一致性">1.1.2 双写一致性</h3>
+<p><strong>面试官：</strong> redis作为缓存，MySQL的数据如何与redis进行同步呢？（双写一致性）</p>
+<p>先介绍自己的业务背景（一致性要求高，允许延迟一致）</p>
+<p><strong>双写一致：</strong> 当修改了数据库的数据也要同时更新缓存的数据，缓存和数据库的数据要保持一致</p>
+<ul>
+<li>读操作：缓存命中，直接返回；缓存未命中，写入缓存，设定超时时间</li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242242919.png" alt="image-20241024224252877"></p>
+<ul>
+<li>写操作：<strong>延迟双删</strong></li>
+</ul>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242244972.png" alt="image-20241024224423946"></p>
+<p>分析：</p>
+<p>1、先删除缓存，还是先新建数据库</p>
+<ul>
+<li>先删除缓存，再操作数据库</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242247653.png" alt="image-20241024224744623" style="zoom: 67%;" />
+<ul>
+<li>先操作数据库，再删除缓存</li>
+</ul>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242250361.png" alt="image-20241024225000324" style="zoom:67%;" />
+<p>2、为什么要删除两次缓存？</p>
+<p>因为从上面的场景导入，我们发现，无论是先删除缓存还是先修改数据库，都会有数据不一致，即脏数据的风险。</p>
+<p>再次把先删除缓存，再修改数据库的异常流程图拿过来，我们发现整个流程走完后，线程1更新数据库，拿到的是正确的值。而线程2拿到的是错误的值，这时只要我们以数据库为主，删除缓存，再写入数据库的值，那么就能拿到正确的值。</p>
+<p>3、为什么要延时双删？</p>
+<p>此外，延时一会是因为一般数据库都是主从分离，读写分离的。延时是为了让主库有时间通知到从库，所有数据库的更新操作全部走完。<br>
+延时双删极大程度上避免了脏数据的风险，但因为有延时的存在，延时时间不好控制，所以也不能说百分百避免</p>
+<p><strong>分布式锁</strong></p>
+<p>互斥锁：直接加互斥锁能保障数据的强一致性，但是性能较低。此时我们就需要优化一下互斥锁。因为存入缓存的数据，一般都是读多写少</p>
+<p>共享锁：（读锁readLock）加锁之后，其他线程可以共享读操作</p>
+<p>排它锁：（独占锁writeLock）加锁之后，阻塞其他线程读写操作</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242300256.png" alt="image-20241024230054220"></p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">RReadWriteLock</span> <span class="variable">readWriteLock</span> <span class="operator">=</span> redissonClient.getReadWriteLock(<span class="string">&quot;ITEM_READ_WRITE_LOCK&quot;</span>);</span><br><span class="line"></span><br><span class="line"><span class="type">RLock</span> <span class="variable">readLock</span> <span class="operator">=</span> readWriteLock.readLock();</span><br><span class="line"><span class="type">RLock</span> <span class="variable">writeLock</span> <span class="operator">=</span> readWriteLock.writeLock();</span><br><span class="line"></span><br><span class="line"><span class="comment">// 读操作</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">getById</span><span class="params">(Integer id)</span>&#123;</span><br><span class="line">  <span class="type">RReadWriteLock</span> <span class="variable">readWriteLock</span> <span class="operator">=</span> redissonClient.getReadWriteLock(<span class="string">&quot;ITEM_READ_WRITE_LOCK&quot;</span>);</span><br><span class="line">  <span class="type">RLock</span> <span class="variable">readLock</span> <span class="operator">=</span> readWriteLock.readLock();</span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    readLock.lock();</span><br><span class="line">    System.out.println(<span class="string">&quot;readLock...&quot;</span>);</span><br><span class="line">    <span class="type">Item</span> <span class="variable">item</span> <span class="operator">=</span> (Item) redisTemplate.opsForValue().get(<span class="string">&quot;item&quot;</span>+id);</span><br><span class="line">    <span class="keyword">if</span>(item != <span class="literal">null</span>)&#123;</span><br><span class="line">      <span class="keyword">return</span> item;</span><br><span class="line">    &#125;</span><br><span class="line">    item = <span class="keyword">new</span> <span class="title class_">Item</span>(id, <span class="string">&quot;华为手机&quot;</span>, <span class="string">&quot;华为手机&quot;</span>, <span class="number">5999.00</span>);</span><br><span class="line">    redisTemplate.opsForValue().set(<span class="string">&quot;item&quot;</span>+id, item);</span><br><span class="line">    <span class="keyword">return</span> item;</span><br><span class="line">  &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">    readLock.unlock();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 写操作</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title function_">updateById</span><span class="params">(Integer id)</span>&#123;</span><br><span class="line">  <span class="type">RReadWriteLock</span> <span class="variable">readWriteLock</span> <span class="operator">=</span> redissonClient.getReadWriteLock(<span class="string">&quot;ITEM_READ_WRITE_LOCK&quot;</span>);</span><br><span class="line">  <span class="type">RLock</span> <span class="variable">writeLock</span> <span class="operator">=</span> readWriteLock.writeLock();</span><br><span class="line">  <span class="keyword">try</span>&#123;</span><br><span class="line">    writeLock.lock();</span><br><span class="line">    System.out.println(<span class="string">&quot;writeLock...&quot;</span>);</span><br><span class="line">    <span class="type">Item</span> <span class="variable">item</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="title class_">Item</span>(id, <span class="string">&quot;华为手机&quot;</span>, <span class="string">&quot;华为手机&quot;</span>, <span class="number">5299.00</span>);</span><br><span class="line">    <span class="keyword">try</span>&#123;</span><br><span class="line">      Thread.sleep(<span class="number">10000</span>);</span><br><span class="line">    &#125;<span class="keyword">catch</span>(InterruptedException e)&#123;</span><br><span class="line">      e.printStackTrace();</span><br><span class="line">    &#125;</span><br><span class="line">    redisTemplate.delete(<span class="string">&quot;item&quot;</span>+id);</span><br><span class="line">  &#125;<span class="keyword">finally</span>&#123;</span><br><span class="line">    writeLock.unlock();</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p><strong>异步通知</strong></p>
+<p>异步通知保证数据的最终一致性</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242307606.png" alt="image-20241024230758560" style="zoom:67%;" />
+<p>基于Canal的异步通知</p>
+<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242330980.png" alt="img" style="zoom:50%;" />
+<p>canal的方案对于业务代码几乎是零侵入的。</p>
+<h3 id="1-1-3-持久化">1.1.3 持久化</h3>
+<p><strong>面试官：</strong> redis做为缓存，数据的持久化是怎么做的？</p>
+<p>在Redis中提供了两种数据持久化的方式：1、RDB 2、AOF</p>
+<div class="tabs" id=""><ul class="nav-tabs"><button type="button" class="tab  active" data-href="-1">RDB</button><button type="button" class="tab " data-href="-2">AOF</button></ul><div class="tab-contents"><div class="tab-item-content active" id="-1"><p><strong>RDB机制</strong></p>
+<ul>
+<li>Redis提供了RDB持久化能力，这个功能可以将Redis在内存中的数据库状态保持在磁盘里面，避免数据意外丢失。</li>
+<li>RDB持久化机制可以手动执行，也可以根据服务器配置选定定期执行操作，该功能可以将某一个时间点的数据快照进行保存到一个RDB文件中。</li>
+</ul>
+<p><strong>RDB优势</strong></p>
+<ul>
+<li>一旦采用该方式，那么你的整个Redis数据库将只包含一个文件，这对于文件备份而言是非常完美的。比如，你可能打算每个小时归档一次最近24小时的数据，同时还要每天归档一次最近30天的数据。通过这样的备份策略，一旦系统出现灾难性故障，我们可以非常容易的进行恢复。</li>
+<li>对于灾难恢复而言，RDB是非常不错的选择。因为我们可以非常轻松的将一个单独的文件压缩后再转移到其它存储介质上。</li>
+<li>性能最大化。对于Redis的服务进程而言，在开始持久化时，它唯一需要做的只是fork出子进程，之后再由子进程完成这些持久化的工作，这样就可以极大的避免服务进程执行IO操作了。</li>
+<li>相比于AOF机制，如果数据集很大，RDB的启动效率会更高。</li>
+</ul>
+<p><strong>RDB劣势</strong></p>
+<ul>
+<li>如果你想保证数据的高可用性，即最大限度的避免数据丢失，那么RDB将不是一个很好的选择。因为系统一旦在定时持久化之前出现宕机现象，此前没有来得及写入磁盘的数据都将丢失。</li>
+<li>由于RDB是通过fork子进程来协助完成数据持久化工作的，因此，如果当数据集较大时，可能会导致整个服务器停止服务几百毫秒，甚至是1秒钟。</li>
+</ul>
+<p>save &lt;指定时间间隔&gt; &lt;执行指定次数更新操作&gt;，满足条件就将内存中的数据同步到硬盘中。官方出厂配置默认是 900秒内有1个更改，300秒内有10个更改以及60秒内有10000个更改，则将内存中的数据快照写入磁盘。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">save 900 1      #在900秒（15分钟）之后，如果至少有一个key发生变化，则dump内存快照</span><br><span class="line">save 300 10     #在300秒（15分钟）之后，如果至少有10个key发生变化，则dump内存快照</span><br><span class="line">save 60 10000   #在60秒（1分钟）之后，如果至少有10000个key发生变化，则dump内存快照</span><br></pre></td></tr></table></figure>
+<p><strong>快照的过程如下:</strong></p>
+<ol>
+<li>
+<p>Redis使用fork函数复制一份当前进程（父进程）的副本（子进程）；</p>
+</li>
+<li>
+<p>父进程继续接收并处理客户端发来的命令，而子进程开始将内存中的数据写入硬盘中的临时文件；</p>
+</li>
+<li>
+<p>当子进程写入完所有数据后会用该临时文件替换旧的RDB文件，至此一次快照操作完成。（注意：会存在写一部命令压缩缓存区，记录写入rdb文件时候的操作）</p>
+<p>在执行fork的时候操作系统会使用写时复制（copy-on-write）策略，即fork函数发生的一刻父子进程共享同一内存数据，当父进程要更改其中某片数据时（如执行一个写命令），操作系统会将该片数据复制一份以保证子进程的数据不受影响，所以新的RDB文件存储的是执行fork时那一刻的内存快照数据。</p>
+<p>通过上述过程可以发现Redis在进行快照的过程中不会修改RDB文件，只有快照结束后才会将旧的文件替换成新的，也就是说任何时候RDB文件都是完整的。这使得可以通过定时备份RDB文件来实现Redis数据库备份。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242324514.png" alt="image-20241024232434458"></p>
+</li>
+</ol></div><div class="tab-item-content" id="-2"><p>AOF全称Append Only File(追加文件)。Redis处理的每一条命令都会记录在AOF文件，可以看做是命令日志文件<img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242328471.png" alt="image-20241024232818427"></p>
+<p>AOF默认是关闭的，需要修改 <strong>redis.conf</strong> 配置文件来开启AOF</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># 是否开启AOF功能，默认是no</span><br><span class="line">appendonly yes</span><br><span class="line"># AOF文件的名称</span><br><span class="line">appendfilename &quot;appendonly.aof&quot;</span><br></pre></td></tr></table></figure>
+<p>AOF的命令记录的频率也可以通过redis.conf 文件来配置</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 表示每执行一次写命令，立即记录到AOF文件</span><br><span class="line">appendfsync always</span><br><span class="line"># 写命令执行完先放入AOF缓冲区，然后每隔1秒将缓冲区数据写到AOF文件，是默认方案</span><br><span class="line">appendfsync everysec</span><br><span class="line"># 写命令执行完先放入缓冲区，由操作系统决定何时将缓冲区内容写到磁盘</span><br><span class="line">appendfsync no</span><br></pre></td></tr></table></figure>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242331685.png" alt="image-20241024233121648"></p>
+<p>因为是记录命令，AOF文件会比RDB文件大的多。而且AOF会记录对同一个key的多次写操作，但只有最后一次写操作才有意义。通过执行bgrewriteaof命令，可以让AOF文件执行重写功能，用最少的命令达到相同效果。</p>
+<p>Redis也会在触发阈值时自动去重写AOF文件。阈值也可以在redis.conf中配置:</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"># AOF文件比上次文件 增长超过多少百分比则触发重写</span><br><span class="line">auto-aof-rewrite-percentage 100</span><br><span class="line">#AOF文件体积最小多大以上才触发重写</span><br><span class="line">auto-aof-rewrite-min-size 64mb</span><br></pre></td></tr></table></figure></div></div><div class="tab-to-top"><button type="button" aria-label="scroll to top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div>
+<h3 id="1-1-4-数据过期策略">1.1.4 数据过期策略</h3>
+<p><strong>面试官：</strong> 假如redis的key过期之后，会立即删除吗？</p>
+<p>Redis对数据设置数据的有效时间，数据过期以后，就需要将数据从内存中删除掉。可以按照不同的规则进行删除，这种删除规则就被称之为数据的删除策略(数据过期策略)。</p>
+<p><strong>惰性删除</strong></p>
+<p>惰性删除:设置该key过期时间后，我们不去管它，当需要该key时，我们在检查其是否过期，如果过期，我们就删掉它，反之返回该key</p>
+<ul>
+<li>优点:对CPU友好，只会在使用该key时才会进行过期检查，对于很多用不到的key不用浪费时间进行过期检查</li>
+<li>缺点:对内存不友好，如果一个key已经过期，但是一直没有使用，那么该key就会一直存在内存中，内存永远不会释放</li>
+</ul>
+<p><strong>定期删除</strong></p>
+<p>定期删除:每隔一段时间，我们就对一些key进行检查，删除里面过期的key(从一定数量的数据库中取出一定数量的随机key进行检查，并删除其中的过期key)。</p>
+<p>定期清理有两种模式:</p>
+<ul>
+<li>
+<p>SLOW模式是定时任务，执行频率默认为10hz，每次不超过25ms，以通过修改配置文件redis.conf 的hz 选项来调整这个次数</p>
+</li>
+<li>
+<p>FAST模式执行频率不固定，但两次间隔不低于2ms，每次耗时不超过1ms</p>
+</li>
+</ul>
+<p>优点:可以通过限制删除操作执行的时长和频率来减少删除操作对 CPU 的影响。另外定期删除，也能有效释放过期键占用的内存。</p>
+<p>缺点:难以确定删除操作执行的时长和频率。</p>
+<h3 id="1-1-5-数据淘汰策略">1.1.5 数据淘汰策略</h3>
+<p><strong>面试官:</strong> 假如缓存过多，内存是有限的，内存被占满了怎么办?</p>
+<p><strong>数据的淘汰策略</strong>:当Redis中的内存不够用时，此时在向Redis中添加新的key，那么Redis就会按照某一种规则将内存中的数据删除掉，这种数据的删除规则被称之为内存的淘汰策略。</p>
+<p><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242358819.png" alt="image-20241024235846747"></p>
+<p><strong>使用建议</strong></p>
+<ol>
+<li>优先使用 alkeys-lru 策略。充分利用 LRU 算法的优势，把最近最常访问的数据留在缓存中。如果业务有明显的冷热数据区分，建议使用。</li>
+<li>如果业务中数据访问频率差别不大，没有明显冷热数据区分，建议使用alkeys-random，随机选择淘汰。</li>
+<li>如果业务中有置顶的需求，可以使用 volatile-lru 策略，同时置顶数据不设置过期时间，这些数据就一直不被删除<br>
+会淘汰其他设置过期时间的数据。</li>
+<li>如果业务中有短时高频访问的数据，可以使用 allkeys-lfu 或 volatile-lfu 策略。</li>
+</ol>
+<p>其他面试题：</p>
+<p>1、数据库有1000万数据，Redis只能缓存20w数据,如何保证Redis中的数据都是热点数据?</p>
+<p>使用allkeys-lru(挑选最近最少使用的数据淘汰)淘汰策略，留下来的都是经常访问的热点数据</p>
+<p>2、Redis的内存用完了会发生什么?</p>
+<p>主要看数据淘汰策略是什么?如果是默认的配置(noeviction)，会直接报错</p>
+</article><div class="post-copyright"><div class="copyright-cc-box"><i class="anzhiyufont anzhiyu-icon-copyright"></i></div><div class="post-copyright__author_box"><a class="post-copyright__author_img" href="/" title="头像"><img class="post-copyright__author_img_back" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/./images/tx.jpg" title="头像" alt="头像"><img class="post-copyright__author_img_front" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/./images/tx.jpg" title="头像" alt="头像"></a><div class="post-copyright__author_name">江小白</div><div class="post-copyright__author_desc">生活明朗，万物可爱</div></div><div class="post-copyright__post__info"><a class="post-copyright__original" title="该文章为原创文章，注意版权协议" href="http://example.com/posts/97408b2e.html">原创</a><a class="post-copyright-title"><span onclick="rm.copyPageUrl('http://example.com/posts/97408b2e.html')">Java面试</span></a></div><div class="post-tools" id="post-tools"><div class="post-tools-left"><div class="rewardLeftButton"></div><div class="shareRight"><div class="share-link mobile"><div class="share-qrcode"><div class="share-button" title="使用手机访问这篇文章"><i class="anzhiyufont anzhiyu-icon-qrcode"></i></div><div class="share-main"><div class="share-main-all"><div id="qrcode" title="http://example.com/posts/97408b2e.html"></div><div class="reward-dec">使用手机访问这篇文章</div></div></div></div></div><div class="share-link weibo"><a class="share-button" target="_blank" href="https://service.weibo.com/share/share.php?title=Java面试&amp;url=http://example.com/posts/97408b2e.html&amp;pic=https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242141269.jpeg" rel="external nofollow noreferrer noopener"><i class="anzhiyufont anzhiyu-icon-weibo"></i></a></div><script>function copyCurrentPageUrl() {
+  var currentPageUrl = window.location.href;
+  var input = document.createElement("input");
+  input.setAttribute("value", currentPageUrl);
+  document.body.appendChild(input);
+  input.select();
+  input.setSelectionRange(0, 99999);
+  document.execCommand("copy");
+  document.body.removeChild(input);
+}</script><div class="share-link copyurl"><div class="share-button" id="post-share-url" title="复制链接" onclick="copyCurrentPageUrl()"><i class="anzhiyufont anzhiyu-icon-link"></i></div></div></div></div></div><div class="post-copyright__notice"><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="http://example.com" target="_blank">无限进步</a>！</span></div></div><div class="post-tools-right"><div class="tag_share"><div class="post-meta__box"><div class="post-meta__box__category-list"><a class="post-meta__box__categoryes" href="/categories/java/"><span class="categoryes-punctuation"> <i class="anzhiyufont anzhiyu-icon-inbox"></i></span>java<span class="categoryesPageCount">1</span></a></div><div class="post-meta__box__tag-list"><a class="post-meta__box__tags" href="/tags/java/"><span class="tags-punctuation"> <i class="anzhiyufont anzhiyu-icon-tag"></i></span>java<span class="tagsPageCount">2</span></a></div></div><div class="post_share"><div class="social-share" data-image="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242141269.jpeg" data-sites="wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"/><script src="https://cdn.cbd.int/butterfly-extsrc@1.1.3/sharejs/dist/js/social-share.min.js" defer="defer"></script></div></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-full"><a href="/posts/a378bd8e.html"><img class="prev-cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410190406755.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Python基础</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="anzhiyufont anzhiyu-icon-thumbs-up fa-fw" style="font-size: 1.5rem; margin-right: 4px"></i><span>喜欢这篇文章的人也看了</span></div><div class="relatedPosts-list"><div><a href="/posts/79666db.html" title="数据结构"><img class="cover" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410190344700.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="anzhiyufont anzhiyu-icon-calendar-days fa-fw"></i> 2024-10-12</div><div class="title">数据结构</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="card-content"><div class="author-info-avatar"><img class="avatar-img" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/./images/tx.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__description">JIANGXIAOBAI</div><div class="author-info__bottom-group"><a class="author-info__bottom-group-left" href="/"><h1 class="author-info__name">江小白</h1><div class="author-info__desc">生活明朗，万物可爱</div></a><div class="card-info-social-icons is-center"><a class="social-icon faa-parent animated-hover" href="https://github.com/anzhiyu-c" target="_blank" title="Github"><i class="anzhiyufont anzhiyu-icon-github"></i></a><a class="social-icon faa-parent animated-hover" href="https://space.bilibili.com/372204786" target="_blank" title="BiliBili"><i class="anzhiyufont anzhiyu-icon-bilibili"></i></a></div></div></div></div><div class="card-widget card-announcement"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bullhorn anzhiyu-shake"></i><span>公告</span></div><div class="announcement_content">欢迎来看我的博客鸭~</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-bars"></i><span>文章目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link"><span class="toc-number">1.</span> <span class="toc-text">一、Redis</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1-1-redis%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">1.1.</span> <span class="toc-text">1.1 redis使用场景</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-1-%E7%BC%93%E5%AD%98"><span class="toc-number">1.1.1.</span> <span class="toc-text">1.1.1 缓存</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-2-%E5%8F%8C%E5%86%99%E4%B8%80%E8%87%B4%E6%80%A7"><span class="toc-number">1.1.2.</span> <span class="toc-text">1.1.2 双写一致性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-3-%E6%8C%81%E4%B9%85%E5%8C%96"><span class="toc-number">1.1.3.</span> <span class="toc-text">1.1.3 持久化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-4-%E6%95%B0%E6%8D%AE%E8%BF%87%E6%9C%9F%E7%AD%96%E7%95%A5"><span class="toc-number">1.1.4.</span> <span class="toc-text">1.1.4 数据过期策略</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1-5-%E6%95%B0%E6%8D%AE%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5"><span class="toc-number">1.1.5.</span> <span class="toc-text">1.1.5 数据淘汰策略</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="anzhiyufont anzhiyu-icon-history"></i><span>最近发布</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/posts/97408b2e.html" title="Java面试"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410242141269.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Java面试"/></a><div class="content"><a class="title" href="/posts/97408b2e.html" title="Java面试">Java面试</a><time datetime="2024-10-24T13:38:36.000Z" title="发表于 2024-10-24 21:38:36">2024-10-24</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/a378bd8e.html" title="Python基础"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410190406755.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Python基础"/></a><div class="content"><a class="title" href="/posts/a378bd8e.html" title="Python基础">Python基础</a><time datetime="2024-10-18T09:51:10.000Z" title="发表于 2024-10-18 17:51:10">2024-10-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/73864691.html" title="安知鱼主题修改"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://pic.netbian.com/uploads/allimg/240516/162509-1715847909149b.jpg?_r_=aa57472a-4771-e975-1533-9ef3b475f7a8" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="安知鱼主题修改"/></a><div class="content"><a class="title" href="/posts/73864691.html" title="安知鱼主题修改">安知鱼主题修改</a><time datetime="2024-10-12T17:30:47.000Z" title="发表于 2024-10-13 01:30:47">2024-10-13</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/79666db.html" title="数据结构"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410190344700.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="数据结构"/></a><div class="content"><a class="title" href="/posts/79666db.html" title="数据结构">数据结构</a><time datetime="2024-10-12T11:12:37.000Z" title="发表于 2024-10-12 19:12:37">2024-10-12</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/posts/d8439cde.html" title="linux安装redis6.2.6"><img src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://figureed.oss-cn-beijing.aliyuncs.com/img/202410190401492.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="linux安装redis6.2.6"/></a><div class="content"><a class="title" href="/posts/d8439cde.html" title="linux安装redis6.2.6">linux安装redis6.2.6</a><time datetime="2024-09-28T15:45:56.000Z" title="发表于 2024-09-28 23:45:56">2024-09-28</time></div></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div id="workboard"><img class="workSituationImg boardsign" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-上班摸鱼中.svg" alt="距离月入25k也就还差一个大佬带我~" title="距离月入25k也就还差一个大佬带我~"/><div id="runtimeTextTip"></div></div></div><div id="footer-bar"><div class="footer-bar-links"><div class="footer-bar-left"><div id="footer-bar-tips"><div class="copyright">&copy;2024 By <a class="footer-bar-link" href="/" title="江小白" target="_blank">江小白</a></div></div><div id="footer-type-tips"></div></div><div class="footer-bar-right"><a class="footer-bar-link" target="_blank" rel="noopener" href="https://github.com/anzhiyu-c/hexo-theme-anzhiyu" title="主题">主题</a></div></div></div></footer></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="sidebar-site-data site-data is-center"><a href="/archives/" title="archive"><div class="headline">文章</div><div class="length-num">6</div></a><a href="/tags/" title="tag"><div class="headline">标签</div><div class="length-num">3</div></a><a href="/categories/" title="category"><div class="headline">分类</div><div class="length-num">3</div></a></div><span class="sidebar-menu-item-title">功能</span><div class="sidebar-menu-item"><a class="darkmode_switchbutton menu-child" href="javascript:void(0);" title="显示模式"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span>显示模式</span></a></div><div class="back-menu-list-groups"><div class="back-menu-list-group"><div class="back-menu-list-title">网页</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://blog.anheyu.com/" title="博客"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="/img/favicon.ico" alt="博客"/><span class="back-menu-item-text">博客</span></a></div></div><div class="back-menu-list-group"><div class="back-menu-list-title">项目</div><div class="back-menu-list"><a class="back-menu-item" target="_blank" rel="noopener" href="https://image.anheyu.com/" title="安知鱼图床"><img class="back-menu-item-icon" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://image.anheyu.com/favicon.ico" alt="安知鱼图床"/><span class="back-menu-item-text">安知鱼图床</span></a></div></div></div><div class="menus_items"><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 文章</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/archives/"><i class="anzhiyufont anzhiyu-icon-box-archive faa-tada" style="font-size: 0.9em;"></i><span> 隧道</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/nav/categories/"><i class="anzhiyufont anzhiyu-icon-shapes faa-tada" style="font-size: 0.9em;"></i><span> 分类</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/nav/tags/"><i class="anzhiyufont anzhiyu-icon-tags faa-tada" style="font-size: 0.9em;"></i><span> 标签</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 友链</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/nav/link/"><i class="anzhiyufont anzhiyu-icon-link faa-tada" style="font-size: 0.9em;"></i><span> 友人帐</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/comments/"><i class="anzhiyufont anzhiyu-icon-envelope faa-tada" style="font-size: 0.9em;"></i><span> 留言板</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 我的</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/music/"><i class="anzhiyufont anzhiyu-icon-music faa-tada" style="font-size: 0.9em;"></i><span> 音乐馆</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/bangumis/"><i class="anzhiyufont anzhiyu-icon-bilibili faa-tada" style="font-size: 0.9em;"></i><span> 追番页</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/album/"><i class="anzhiyufont anzhiyu-icon-images faa-tada" style="font-size: 0.9em;"></i><span> 相册集</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="javascript:void(0);"><span> 关于</span></a><ul class="menus_item_child"><li><a class="site-page child faa-parent animated-hover" href="/nav/about/"><i class="anzhiyufont anzhiyu-icon-paper-plane faa-tada" style="font-size: 0.9em;"></i><span> 关于本人</span></a></li><li><a class="site-page child faa-parent animated-hover" href="/essay/"><i class="anzhiyufont anzhiyu-icon-lightbulb faa-tada" style="font-size: 0.9em;"></i><span> 闲言碎语</span></a></li><li><a class="site-page child faa-parent animated-hover" href="javascript:toRandomPost()"><i class="anzhiyufont anzhiyu-icon-shoe-prints1 faa-tada" style="font-size: 0.9em;"></i><span> 随便逛逛</span></a></li></ul></div></div><span class="sidebar-menu-item-title">标签</span><div class="card-tags"><div class="item-headline"></div><div class="card-tag-cloud"><a href="/tags/Python/" style="font-size: 0.88rem;">Python<sup>1</sup></a><a href="/tags/java/" style="font-size: 0.88rem;">java<sup>2</sup></a><a href="/tags/linux/" style="font-size: 0.88rem;">linux<sup>2</sup></a></div></div><hr/></div></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="anzhiyufont anzhiyu-icon-book-open"></i></button><button id="translateLink" type="button" title="简繁转换">繁</button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="anzhiyufont anzhiyu-icon-arrows-left-right"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="anzhiyufont anzhiyu-icon-gear"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="anzhiyufont anzhiyu-icon-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></button></div></div><div id="nav-music"><a id="nav-music-hoverTips" onclick="anzhiyu.musicToggle()" accesskey="m">播放音乐</a><div id="console-music-bg"></div><meting-js id="2074626569" server="netease" type="playlist" mutex="true" preload="none" theme="var(--anzhiyu-main)" data-lrctype="0" order="random" volume="0.2"></meting-js></div><div id="rightMenu"><div class="rightMenu-group rightMenu-small"><div class="rightMenu-item" id="menu-backward"><i class="anzhiyufont anzhiyu-icon-arrow-left"></i></div><div class="rightMenu-item" id="menu-forward"><i class="anzhiyufont anzhiyu-icon-arrow-right"></i></div><div class="rightMenu-item" id="menu-refresh"><i class="anzhiyufont anzhiyu-icon-arrow-rotate-right" style="font-size: 1rem;"></i></div><div class="rightMenu-item" id="menu-top"><i class="anzhiyufont anzhiyu-icon-arrow-up"></i></div></div><div class="rightMenu-group rightMenu-line rightMenuPlugin"><div class="rightMenu-item" id="menu-copytext"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制选中文本</span></div><div class="rightMenu-item" id="menu-pastetext"><i class="anzhiyufont anzhiyu-icon-paste"></i><span>粘贴文本</span></div><a class="rightMenu-item" id="menu-commenttext"><i class="anzhiyufont anzhiyu-icon-comment-medical"></i><span>引用到评论</span></a><div class="rightMenu-item" id="menu-newwindow"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开</span></div><div class="rightMenu-item" id="menu-copylink"><i class="anzhiyufont anzhiyu-icon-link"></i><span>复制链接地址</span></div><div class="rightMenu-item" id="menu-copyimg"><i class="anzhiyufont anzhiyu-icon-images"></i><span>复制此图片</span></div><div class="rightMenu-item" id="menu-downloadimg"><i class="anzhiyufont anzhiyu-icon-download"></i><span>下载此图片</span></div><div class="rightMenu-item" id="menu-newwindowimg"><i class="anzhiyufont anzhiyu-icon-window-restore"></i><span>新窗口打开图片</span></div><div class="rightMenu-item" id="menu-search"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>站内搜索</span></div><div class="rightMenu-item" id="menu-searchBaidu"><i class="anzhiyufont anzhiyu-icon-magnifying-glass"></i><span>百度搜索</span></div><div class="rightMenu-item" id="menu-music-toggle"><i class="anzhiyufont anzhiyu-icon-play"></i><span>播放音乐</span></div><div class="rightMenu-item" id="menu-music-back"><i class="anzhiyufont anzhiyu-icon-backward"></i><span>切换到上一首</span></div><div class="rightMenu-item" id="menu-music-forward"><i class="anzhiyufont anzhiyu-icon-forward"></i><span>切换到下一首</span></div><div class="rightMenu-item" id="menu-music-playlist" onclick="window.open(&quot;https://y.music.163.com/m/playlist?id=2074626569&quot;, &quot;_blank&quot;);" style="display: none;"><i class="anzhiyufont anzhiyu-icon-radio"></i><span>查看所有歌曲</span></div><div class="rightMenu-item" id="menu-music-copyMusicName"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制歌名</span></div></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item menu-link" id="menu-randomPost"><i class="anzhiyufont anzhiyu-icon-shuffle"></i><span>随便逛逛</span></a><a class="rightMenu-item menu-link" href="/categories/"><i class="anzhiyufont anzhiyu-icon-cube"></i><span>博客分类</span></a><a class="rightMenu-item menu-link" href="/tags/"><i class="anzhiyufont anzhiyu-icon-tags"></i><span>文章标签</span></a></div><div class="rightMenu-group rightMenu-line rightMenuOther"><a class="rightMenu-item" id="menu-copy" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-copy"></i><span>复制地址</span></a><a class="rightMenu-item" id="menu-commentBarrage" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-message"></i><span class="menu-commentBarrage-text">关闭热评</span></a><a class="rightMenu-item" id="menu-darkmode" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-circle-half-stroke"></i><span class="menu-darkmode-text">深色模式</span></a><a class="rightMenu-item" id="menu-translate" href="javascript:void(0);"><i class="anzhiyufont anzhiyu-icon-language"></i><span>轉為繁體</span></a></div></div><div id="rightmenu-mask"></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="/js/tw_cn.js"></script><script src="https://cdn.cbd.int/@fancyapps/ui@5.0.28/dist/fancybox/fancybox.umd.js"></script><script src="https://cdn.cbd.int/instant.page@5.2.0/instantpage.js" type="module"></script><script src="https://cdn.cbd.int/vanilla-lazyload@17.8.5/dist/lazyload.iife.min.js"></script><script src="https://cdn.cbd.int/node-snackbar@0.1.16/dist/snackbar.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.cbd.int/pangu@4.0.7/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (false){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><canvas id="universe"></canvas><script async src="https://npm.elemecdn.com/anzhiyu-theme-static@1.0.0/dark/dark.js"></script><script>// 消除控制台打印
+var HoldLog = console.log;
+console.log = function () {};
+let now1 = new Date();
+queueMicrotask(() => {
+  const Log = function () {
+    HoldLog.apply(console, arguments);
+  }; //在恢复前输出日志
+  const grt = new Date("09/25/2024 00:00:00"); //此处修改你的建站时间或者网站上线时间
+  now1.setTime(now1.getTime() + 250);
+  const days = (now1 - grt) / 1000 / 60 / 60 / 24;
+  const dnum = Math.floor(days);
+  const ascll = [
+    `欢迎使用安知鱼!`,
+    `生活明朗, 万物可爱`,
+    `
+        
+       █████╗ ███╗   ██╗███████╗██╗  ██╗██╗██╗   ██╗██╗   ██╗
+      ██╔══██╗████╗  ██║╚══███╔╝██║  ██║██║╚██╗ ██╔╝██║   ██║
+      ███████║██╔██╗ ██║  ███╔╝ ███████║██║ ╚████╔╝ ██║   ██║
+      ██╔══██║██║╚██╗██║ ███╔╝  ██╔══██║██║  ╚██╔╝  ██║   ██║
+      ██║  ██║██║ ╚████║███████╗██║  ██║██║   ██║   ╚██████╔╝
+      ╚═╝  ╚═╝╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝╚═╝   ╚═╝    ╚═════╝
+        
+        `,
+    "已上线",
+    dnum,
+    "天",
+    "©2024 By 安知鱼 V1.6.12",
+  ];
+  const ascll2 = [`NCC2-036`, `调用前置摄像头拍照成功，识别为【小笨蛋】.`, `Photo captured: `, `🤪`];
+
+  setTimeout(
+    Log.bind(
+      console,
+      `\n%c${ascll[0]} %c ${ascll[1]} %c ${ascll[2]} %c${ascll[3]}%c ${ascll[4]}%c ${ascll[5]}\n\n%c ${ascll[6]}\n`,
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      "color:#425AEF",
+      "",
+      "color:#425AEF",
+      ""
+    )
+  );
+  setTimeout(
+    Log.bind(
+      console,
+      `%c ${ascll2[0]} %c ${ascll2[1]} %c \n${ascll2[2]} %c\n${ascll2[3]}\n`,
+      "color:white; background-color:#4fd953",
+      "",
+      "",
+      'background:url("https://npm.elemecdn.com/anzhiyu-blog@1.1.6/img/post/common/tinggge.gif") no-repeat;font-size:450%'
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c WELCOME %c 你好，小笨蛋.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(
+      console,
+      "%c ⚡ Powered by 安知鱼 %c 你正在访问 江小白 的博客.",
+      "color:white; background-color:#f0ad4e",
+      ""
+    )
+  );
+
+  setTimeout(Log.bind(console, "%c W23-12 %c 你已打开控制台.", "color:white; background-color:#4f90d9", ""));
+
+  setTimeout(
+    console.warn.bind(console, "%c S013-782 %c 你现在正处于监控中.", "color:white; background-color:#d9534f", "")
+  );
+});</script><script async src="/anzhiyu/random.js"></script><script async="async">(function () {
+  var grt = new Date("09/25/2024 00:00:00"); //设置网站上线时间
+  var now = new Date();
+  var dnum;
+  var hnum;
+  var mnum;
+  var snum;
+  var nowHour;
+
+  // 计算并更新天数、小时数、分钟数和秒数
+  function updateTime() {
+    now = new Date(); // 更新 now 的值
+    nowHour = now.getHours(); // 更新 nowHour 的值
+    var days = (now - grt) / 1000 / 60 / 60 / 24;
+    dnum = Math.floor(days);
+    var hours = (now - grt) / 1000 / 60 / 60 - 24 * dnum;
+    hnum = Math.floor(hours);
+    if (String(hnum).length == 1) {
+      hnum = "0" + hnum;
+    }
+    var minutes = (now - grt) / 1000 / 60 - 24 * 60 * dnum - 60 * hnum;
+    mnum = Math.floor(minutes);
+    if (String(mnum).length == 1) {
+      mnum = "0" + mnum;
+    }
+    var seconds = (now - grt) / 1000 - 24 * 60 * 60 * dnum - 60 * 60 * hnum - 60 * mnum;
+    snum = Math.round(seconds);
+    if (String(snum).length == 1) {
+      snum = "0" + snum;
+    }
+  }
+
+  // 更新网页中显示的网站运行时间
+  function updateHtml() {
+    const footer = document.getElementById("footer");
+    if (!footer) return
+    let currentTimeHtml = "";
+    if (nowHour < 18 && nowHour >= 9) {
+      // 如果是上班时间，默认就是"安知鱼-上班摸鱼中.svg"图片，不需要更改
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    } else {
+      // 如果是下班时间，插入"安知鱼-下班啦.svg"图片
+      let img = document.querySelector("#workboard .workSituationImg");
+      if (img != null) {
+        img.src = "https://npm.elemecdn.com/anzhiyu-blog@2.0.4/img/badge/安知鱼-下班啦.svg";
+        img.title = "下班了就该开开心心的玩耍，嘿嘿~";
+        img.alt = "下班了就该开开心心的玩耍，嘿嘿~";
+      }
+
+      currentTimeHtml = `本站居然运行了 ${dnum} 天<span id='runtime'> ${hnum} 小时 ${mnum} 分 ${snum} 秒 </span><i class='anzhiyufont anzhiyu-icon-heartbeat' style='color:red'></i>`;
+    }
+
+    if (document.getElementById("runtimeTextTip")) {
+      document.getElementById("runtimeTextTip").innerHTML = currentTimeHtml;
+    }
+  }
+
+  setInterval(() => {
+    updateTime();
+    updateHtml();
+  }, 1000);
+})();</script><div class="js-pjax"><script>(() => {
+  const $mermaid = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaid.length === 0) return
+  const runMermaid = () => {
+    window.loadMermaid = true
+    const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+    Array.from($mermaid).forEach((item, index) => {
+      const mermaidSrc = item.firstElementChild
+      const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+      const mermaidID = 'mermaid-' + index
+      const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+
+      const renderFn = mermaid.render(mermaidID, mermaidDefinition)
+
+      const renderV10 = () => {
+        renderFn.then(({svg}) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svg)
+        })
+      }
+
+      const renderV9 = svg => {
+        mermaidSrc.insertAdjacentHTML('afterend', svg)
+      }
+
+      typeof renderFn === 'string' ? renderV9(renderFn) : renderV10()
+    })
+  }
+
+  const loadMermaid = () => {
+    window.loadMermaid ? runMermaid() : getScript('https://cdn.cbd.int/mermaid@10.2.4/dist/mermaid.min.js').then(runMermaid)
+  }
+
+  anzhiyu.addGlobalFn('themeChange', runMermaid, 'mermaid')
+
+  window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+})()</script><input type="hidden" name="page-type" id="page-type" value="post"></div><script>var visitorMail = "";
+</script><script async data-pjax src="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/waterfall/waterfall.js"></script><script src="https://lf3-cdn-tos.bytecdntp.com/cdn/expire-1-M/qrcodejs/1.0.0/qrcode.min.js"></script><script src="/js/anzhiyu/right_click_menu.js"></script><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.1.9/icon/ali_iconfont_css.css"><link rel="stylesheet" href="https://cdn.cbd.int/anzhiyu-theme-static@1.0.0/aplayer/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.cbd.int/anzhiyu-blog-static@1.0.1/js/APlayer.min.js"></script><script src="https://cdn.cbd.int/hexo-anzhiyu-music@1.0.1/assets/js/Meting2.min.js"></script><script src="https://cdn.cbd.int/pjax@0.2.8/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"]):not([href="/music/"]):not([href="/no-pjax/"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+  // removeEventListener scroll 
+  anzhiyu.removeGlobalFnEvent('pjax')
+  anzhiyu.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script charset="UTF-8" src="https://cdn.cbd.int/anzhiyu-theme-static@1.1.5/accesskey/accesskey.js"></script></div><div id="popup-window"><div class="popup-window-title">通知</div><div class="popup-window-divider"></div><div class="popup-window-content"><div class="popup-tip">你好呀</div><div class="popup-link"><i class="anzhiyufont anzhiyu-icon-arrow-circle-right"></i></div></div></div><!-- hexo injector body_end start --><script async src="/js/ali_font.js"></script><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src= "data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7" onerror="this.onerror=null,this.src=&quot;/img/404.jpg&quot;" data-lazy-src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = 'b16a1fa0e63c46a4b8f28abfb06ae3fe';
+  var gaud_map_key = 'c4a3e72506199d1a8a9a43c32bd2f28b';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><!-- hexo injector body_end end --><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/wanko.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":false},"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/"});</script></body></html>
